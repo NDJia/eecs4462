@@ -1,0 +1,4 @@
+arpeggio uses a fixed clock for arpeggiation, should be set to always start arpeggio on the first note pressed
+
+create tracking variable for time that the first note is pressed; compare current time to tracking variable instead of 0
+
