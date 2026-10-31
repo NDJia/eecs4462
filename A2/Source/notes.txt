@@ -1,0 +1,51 @@
+"delay line:" up to 8 audio channels have different delay settings
+Should be an option to sync the delay line settings
+
+Dry setting is for all channels
+Wet setting is individual
+
+Split buffer into discrete chunks according to the number of samples
+Variable for current buffer start point
+Circular buffer; output is current buffer*dry + (some number of buffers ago)*wet
+    when index is negative instead go to the (size-1-index)
+
+feedback, feedback^2, feedback^3, etc.
+
+Get the index of the start of the delay buffer block (0 + numSamples, + numSamples, etc.)
+
+Pointer to fixed "past" point in the delay buffer, representing further repetitions
+Separate pointer to "present" point in delay buffer, representing first repetition
+
+For each sample in the input buffer:
+    Output = input*dry + present*wet
+
+    Get "future" point in buffer based on time interval
+    Delay buffer at future = input*dry + present*feedback
+
+============
+Zeno: all repetitions will take double the time of the first repetitition
+
+at max time of 3 seconds, all repetitions are within 6 seconds
+
+Create a zeno buffer and place each repetition at fixed points
+
+Make a fixed number of repetitions; when you move less than one sample forward terminate the loop (or hardcode the number of repetitions to ie. 10)
+
+for each sample in the block:
+    Output buffer is input*dry + present*wet
+
+    At future point in buffer, input*dry + present*feedback
+
+    Keep track of current future point
+
+    Repeat 10 times:
+        halve current repetition interval
+        future(n+1) = future + halved
+        future(n+1) = future(n)*feedback
+
+** create a buffer of six seconds; use half of it for non-zeno
+
+================
+Delay lines: perform the delay algorithm the number of times defined by the user, with each definition having different wet/feedback values
+
+Wet/feedback should be array of ints then

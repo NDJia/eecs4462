@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FILTERGRAPH>
-  <FILTER uid="1" x="0.5" y="0.1" useARA="0">
+  <FILTER uid="1" x="0.5870712401055409" y="0.03211351755041075" useARA="0">
     <PLUGIN name="Audio Input" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="246006c0"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="0"
@@ -16,7 +16,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="2" x="0.25" y="0.1" useARA="0">
+  <FILTER uid="2" x="0.1556728232189974" y="0.145631067961165" useARA="0">
     <PLUGIN name="MIDI Input" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="a9e4f9eb"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="0"
@@ -31,7 +31,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="3" x="0.5" y="0.9" useARA="0">
+  <FILTER uid="3" x="0.6529605263157895" y="0.8159203980099502" useARA="0">
     <PLUGIN name="Audio Output" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="724248cb"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="32"
@@ -46,7 +46,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="4" x="0.25" y="0.9" useARA="0">
+  <FILTER uid="4" x="0.06596306068601583" y="0.9858103061986557" useARA="0">
     <PLUGIN name="MIDI Output" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="9d5bbb00"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="0"
@@ -61,7 +61,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="7" x="0.3152753108348135" y="0.327109783420463" useARA="0">
+  <FILTER uid="7" x="0.1899852724594993" y="0.4577114427860697" useARA="0">
     <PLUGIN name="Sine Wave Synth" format="Internal" category="Synth" manufacturer="JUCE"
             version="1.0.0" file="Sine Wave Synth" uniqueId="16fd76a8" isInstrument="1"
             fileTime="0" infoUpdateTime="0" numInputs="0" numOutputs="2"
@@ -74,13 +74,24 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="8" x="0.2757548845470693" y="0.2131398013750955" useARA="0"
-          uiLastX_Normal="1287" uiLastY_Normal="322" uiopen_Normal="0">
-    <PLUGIN name="A1ChordGenArp" format="VST3" category="Fx" manufacturer="EECS4462"
-            version="1.0.0" file="/home/ndjia/.vst3/Assign1.vst3/Contents/x86_64-linux/Assign1.so"
-            uniqueId="799e21f" isInstrument="0" fileTime="1a0ac00ba60" infoUpdateTime="1a0ac0598f9"
+  <FILTER uid="9" x="0.2269736842105263" y="0.3416252072968491" useARA="0"
+          uiLastX_Normal="2" uiLastY_Normal="30" uiopen_Normal="1">
+    <PLUGIN name="MIDI Logger" format="Internal" category="Synth" manufacturer="JUCE"
+            version="1.0.0" file="MIDI Logger" uniqueId="97e2978f" isInstrument="1"
+            fileTime="0" infoUpdateTime="0" numInputs="0" numOutputs="0"
+            isShell="0" hasARAExtension="0" uid="97e2978f"/>
+    <STATE>100.VMjLgrE....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOyQWXzUlO7TWZSQWXzUFH2kFYzgVOhHiL0.iHffVYocFZz0iHwPSL0HxK9vyKyQWXzUlO..</STATE>
+    <LAYOUT>
+      <INPUTS/>
+      <OUTPUTS/>
+    </LAYOUT>
+  </FILTER>
+  <FILTER uid="11" x="0.1529605263157895" y="0.2238805970149254" useARA="0">
+    <PLUGIN name="A1" format="VST3" category="Fx" manufacturer="EECS4462"
+            version="1.0.0" file="/home/ndjia/.vst3/A1.vst3/Contents/x86_64-linux/A1.so"
+            uniqueId="f99aeb25" isInstrument="0" fileTime="1a166b98a30" infoUpdateTime="1a166b9dfc4"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
-            uid="acfe9376"/>
+            uid="acf83b22"/>
     <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
     <LAYOUT>
       <INPUTS>
@@ -91,8 +102,9 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <CONNECTION srcFilter="2" srcChannel="4096" dstFilter="8" dstChannel="4096"/>
+  <CONNECTION srcFilter="2" srcChannel="4096" dstFilter="11" dstChannel="4096"/>
   <CONNECTION srcFilter="7" srcChannel="0" dstFilter="3" dstChannel="0"/>
   <CONNECTION srcFilter="7" srcChannel="1" dstFilter="3" dstChannel="1"/>
-  <CONNECTION srcFilter="8" srcChannel="4096" dstFilter="7" dstChannel="4096"/>
+  <CONNECTION srcFilter="9" srcChannel="4096" dstFilter="7" dstChannel="4096"/>
+  <CONNECTION srcFilter="11" srcChannel="4096" dstFilter="9" dstChannel="4096"/>
 </FILTERGRAPH>

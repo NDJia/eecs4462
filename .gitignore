@@ -1,8 +1,8 @@
 # Ignore pdfs
 *.pdf
 
+# Ignore VSCode workspace files
+*.code-workspace
+
 # Ignore the build folders
 **/Builds
-
-# Ignore the library code folders?
-**/JuceLibraryCode
