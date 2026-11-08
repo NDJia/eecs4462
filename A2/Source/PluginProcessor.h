@@ -68,9 +68,10 @@ private:
     juce::AudioBuffer<float> delayBuffer;
     int delayBufferLength;
 
-    int delayBufferStart;
+    int blockStart;
 
-    int time;
+    float seconds;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A2StarterAudioProcessor)
 };

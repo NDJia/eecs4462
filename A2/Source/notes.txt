@@ -49,3 +49,4 @@ for each sample in the block:
 Delay lines: perform the delay algorithm the number of times defined by the user, with each definition having different wet/feedback values
 
 Wet/feedback should be array of ints then
+(not dry, which is global)

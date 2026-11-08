@@ -16,7 +16,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="13" x="0.152135231316726" y="0.2255414488424197" useARA="0">
+  <FILTER uid="13" x="0.36101243339254" y="0.5713218820014937" useARA="0">
     <PLUGIN name="Sine Wave Synth" format="Internal" category="Synth" manufacturer="JUCE"
             version="1.0.0" file="Sine Wave Synth" uniqueId="16fd76a8" isInstrument="1"
             fileTime="0" infoUpdateTime="0" numInputs="0" numOutputs="2"
@@ -29,7 +29,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="14" x="0.1283422459893048" y="0.1381628080657207" useARA="0">
+  <FILTER uid="14" x="0.3507992895204263" y="0.486183719193428" useARA="0">
     <PLUGIN name="MIDI Input" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="a9e4f9eb"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="0"
@@ -44,10 +44,10 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="15" x="0.1628113879003559" y="0.4742345033607169" useARA="0">
+  <FILTER uid="15" x="0.358348134991119" y="0.6325616131441374" useARA="0">
     <PLUGIN name="A2" format="VST3" category="Fx" manufacturer="EECS4462"
             version="1.0.0" file="/home/ndjia/.vst3/A2.vst3/Contents/x86_64-linux/A2.so"
-            uniqueId="f8a4d425" isInstrument="0" fileTime="1a18d67b350" infoUpdateTime="1a18d695080"
+            uniqueId="f8a4d425" isInstrument="0" fileTime="1a1a84edc98" infoUpdateTime="1a1a86af304"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="acf7e984"/>
     <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
@@ -72,6 +72,21 @@
       </INPUTS>
       <OUTPUTS>
         <BUS index="0" layout="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32"/>
+      </OUTPUTS>
+    </LAYOUT>
+  </FILTER>
+  <FILTER uid="22" x="0.4293960923623446" y="0.4906646751306946" useARA="0"
+          uiLastX_Normal="135" uiLastY_Normal="162" uiopen_Normal="0">
+    <PLUGIN name="APTLYPlayer" format="VST3" category="Fx" manufacturer="yourcompany"
+            version="1.0.0" file="/home/ndjia/.vst3/APTLYPlayer.vst3/Contents/x86_64-linux/APTLYPlayer.so"
+            uniqueId="f6aca824" isInstrument="0" fileTime="1a1a864e150" infoUpdateTime="1a1a86af305"
+            numInputs="0" numOutputs="2" isShell="0" hasARAExtension="0"
+            uid="acf71979"/>
+    <STATE>398.VMjLgTX....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9HSLz3hUMoFSmQTRt3hKt7zJlcUXxEDZisVRxH1a3vVX3fjTLQmKogjYTwVXogiQY8FMwjENHIUUTkEUKMCR38TNtHzSAU0QY8FNrE0a2YUVPcmUXQSUrI1TQcEV5UkQHw1ZFE1ZvjFR0YVLgMWUwrDcQwlVuUTLKQDNwfELvXUVzEkLhUGRUEUPAUUTREjTSsVTVo0Y3HTVmE0QiomK40jd2TjX3gSLYgWUwHVd3rlXqEjLggWTssjLEw1Xn4hPgUGNFI1azDSV3fjPLg1Mn8jKt3hKt3hKt3hKt3hRUACTEEzZh8VVWgkdUYTTmE0UX4BQP4hPqcjXm0jLh4BQP4xPt.0Qt3hKt3hKt3hKtQUUCUEQTg2ZrM1YQcUVDUjQicVP77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
+    <LAYOUT>
+      <INPUTS/>
+      <OUTPUTS>
+        <BUS index="0" layout="L R"/>
       </OUTPUTS>
     </LAYOUT>
   </FILTER>

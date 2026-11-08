@@ -110,9 +110,12 @@ void A2StarterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 
     // set delayBufferLength to three seconds
     delayBufferLength = (int) (timeIntervalSeconds * rate);
-    delayBufferStart = 0;
+    blockStart = 0;
 
-    time = 0;
+    panLeft = 0.5f;
+
+    seconds = 0;
+    pingpongEnabled = true;
 
 }
 
@@ -177,26 +180,31 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         float* data = buffer.getWritePointer (channel,0);
 
         // Get a pointer to write in the delayBuffer
-        float* delayData = delayBuffer.getWritePointer(channel);
+        float* delayData = delayBuffer.getWritePointer(channel,blockStart);
         
-        // Sample audio processing code. Delete for A2 submission
         for (int i = 0; i < numSamples; ++i)
         {
-            // volumeBoost = i*numSamples;
-            //if (data[i] > 0) DBG(data[i]);
-            //data[i] = data[i]*volumeBoost;
-            //if (data[i] > 0) DBG(data[i]);
+            // output is sum of input and current delay buffer sample
+            float sample = (data[i]*volumeBoost + delayData[i]*wet)/2.0f;
+            float pan;
+            if (channel % 2 == 0) pan = panLeft;
+            else pan = (1 - panLeft);
 
+            data[i] = sample * pan;
             // get point in delay buffer in the "future" to write to
-            int delayFuture = (delayBufferStart + i + ((int) (rate*timeIntervalSeconds) + 1)) % delayBufferLength;
-            // Store input and "past" value at future point of delay buffer
+            int delayFuture = ((int) ceil(rate*timeIntervalSeconds) + i) % delayBufferLength;
+            
+            // Store future delay buffer sample
             delayData[delayFuture] = data[i]*volumeBoost*feedback;
-            data[i] = (data[i]*volumeBoost + delayData[i]*wet)/2.0f;
+            
         }
                 
     }
 
-    delayBufferStart = (delayBufferStart + numSamples) % delayBufferLength;
+    blockStart = (blockStart + numSamples) % delayBufferLength;
+
+    seconds += numSamples / rate;
+    if (pingpongEnabled) panLeft = (sin(seconds) + 1.0f) / 2.0f;
 
 }
 

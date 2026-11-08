@@ -6,3 +6,6 @@
 
 # Ignore the build folders
 **/Builds
+
+# Ignore AudioFilePlayer sample plugin
+AudioFilePlayer/
