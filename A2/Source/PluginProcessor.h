@@ -16,7 +16,7 @@
 class A2StarterAudioProcessor  : public juce::AudioProcessor
 {
 public:
-    float volumeBoost;
+    float dry;
     float wet;
     float feedback;
     bool zenoEnabled;
@@ -68,7 +68,7 @@ private:
     juce::AudioBuffer<float> delayBuffer;
     int delayBufferLength;
 
-    int blockStart;
+    int delayBlockStart;
 
     float seconds;
 

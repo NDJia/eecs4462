@@ -95,11 +95,11 @@ void A2StarterAudioProcessor::changeProgramName (int index, const juce::String& 
 void A2StarterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     rate = static_cast<float> (sampleRate);
-    volumeBoost = 1.0;
+    dry = 1.0;
 
-    timeIntervalSeconds = 3.0;
-    wet = 0.9;
-    feedback = 0.75;
+    timeIntervalSeconds = 1.5;
+    wet = 1.0;
+    feedback = 0.3;
     
     // the delay buffer is at most 3 seconds long
     // it should be double the size for zeno, plus a little extra for insurance
@@ -110,12 +110,13 @@ void A2StarterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 
     // set delayBufferLength to three seconds
     delayBufferLength = (int) (timeIntervalSeconds * rate);
-    blockStart = 0;
+    delayBlockStart = 0;
 
     panLeft = 0.5f;
 
     seconds = 0;
-    pingpongEnabled = true;
+    pingpongEnabled = false;
+    zenoEnabled = false;
 
 }
 
@@ -174,37 +175,55 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     int numSamples = buffer.getNumSamples();
     //DBG(1);
 
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    if (!zenoEnabled)
     {
-        // pointer to input buffer
-        float* data = buffer.getWritePointer (channel,0);
-
-        // Get a pointer to write in the delayBuffer
-        float* delayData = delayBuffer.getWritePointer(channel,blockStart);
-        
-        for (int i = 0; i < numSamples; ++i)
+        for (int channel = 0; channel < totalNumInputChannels; ++channel)
         {
-            // output is sum of input and current delay buffer sample
-            float sample = (data[i]*volumeBoost + delayData[i]*wet)/2.0f;
-            float pan;
-            if (channel % 2 == 0) pan = panLeft;
-            else pan = (1 - panLeft);
+            // pointer to input buffer
+            float* data = buffer.getWritePointer (channel,0);
 
-            data[i] = sample * pan;
-            // get point in delay buffer in the "future" to write to
-            int delayFuture = ((int) ceil(rate*timeIntervalSeconds) + i) % delayBufferLength;
+            // Get a pointer to write in the delayBuffer
+            float* delayData = delayBuffer.getWritePointer(channel,delayBlockStart);
             
-            // Store future delay buffer sample
-            delayData[delayFuture] = data[i]*volumeBoost*feedback;
-            
-        }
+            for (int i = 0; i < numSamples; ++i)
+            {
+                // get point in delay buffer in the "future" to write to
+                int futureIndex = ((int) ceil(rate*timeIntervalSeconds) + i) % delayBufferLength;
+
+                // output is sum of input and current delay buffer sample
+                float output = data[i]*dry + delayData[i]*wet;
+                float pan;
+                // if (channel % 2 == 0) pan = panLeft;
+                // else pan = (1 - panLeft);
+                              
                 
+                // Store future delay buffer sample
+                delayData[futureIndex] = data[i] + delayData[i]*feedback;
+                // delayData[futureIndex] = data[i]*dry;
+                // delayData[(futureIndex*2) % delayBufferLength] = data[i]*dry*feedback;
+
+
+                // data[i] = output * pan;
+                data[i] = output;
+                
+            }
+                    
+        }
+    }
+    else
+    {
+
     }
 
-    blockStart = (blockStart + numSamples) % delayBufferLength;
+    // update starting position in delayBuffer for next block
+    delayBlockStart = (delayBlockStart + numSamples) % delayBufferLength;
 
-    seconds += numSamples / rate;
-    if (pingpongEnabled) panLeft = (sin(seconds) + 1.0f) / 2.0f;
+    // update panning value when pingpong is enabled
+    if (pingpongEnabled)
+    {
+        seconds += numSamples / rate;
+        panLeft = (sin(seconds) + 1.0f) / 2.0f;
+    }
 
 }
 
