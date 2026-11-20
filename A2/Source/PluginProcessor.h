@@ -61,6 +61,9 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //====================
+    void clearDelayBuffer();
+
 private:
     float rate;
     // delayBuffer is used to store the input audio,
@@ -70,7 +73,7 @@ private:
 
     int delayBlockStart;
 
-    float seconds;
+    float time;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A2StarterAudioProcessor)

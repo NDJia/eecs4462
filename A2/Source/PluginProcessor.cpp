@@ -114,7 +114,7 @@ void A2StarterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 
     panLeft = 0.5f;
 
-    seconds = 0;
+    time = 0;
     pingpongEnabled = false;
     zenoEnabled = false;
 
@@ -199,12 +199,12 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                 
                 // Store future delay buffer sample
                 delayData[futureIndex] = data[i] + delayData[i]*feedback;
-                // delayData[futureIndex] = data[i]*dry;
-                // delayData[(futureIndex*2) % delayBufferLength] = data[i]*dry*feedback;
 
+                // clear current delay buffer value
+                //delayData[i] = 0.0f;
 
                 // data[i] = output * pan;
-                data[i] = output;
+                data[i] = output * pan;
                 
             }
                     
@@ -217,14 +217,25 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     // update starting position in delayBuffer for next block
     delayBlockStart = (delayBlockStart + numSamples) % delayBufferLength;
+    //delayBlockStart += numSamples;
+    //if (delayBlockStart >= delayBufferLength)
+    //{
+    //  delayBuffer.clear();
+    //  delayBlockStart = delayBlockStart % delayBufferLength;
+    //}
 
     // update panning value when pingpong is enabled
     if (pingpongEnabled)
     {
-        seconds += numSamples / rate;
-        panLeft = (sin(seconds) + 1.0f) / 2.0f;
+        time += numSamples / rate;
+        panLeft = (sin(time) + 1.0f) / 2.0f;
     }
 
+}
+
+void A2StarterAudioProcessor::clearDelayBuffer()
+{
+    delayBuffer.clear();
 }
 
 //==============================================================================

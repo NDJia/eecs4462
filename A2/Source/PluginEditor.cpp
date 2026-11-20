@@ -18,7 +18,7 @@ A2StarterAudioProcessorEditor::A2StarterAudioProcessorEditor (A2StarterAudioProc
     setSize (width, height);
     
     // these define the parameters of our slider object
-	// drySlider represents the global dry parameter.
+    // drySlider represents the global dry parameter.
     drySlider.setSliderStyle (juce::Slider::LinearBarVertical);
     drySlider.setRange (0.0, 2.0, 0.05);
     drySlider.setTextBoxStyle (juce::Slider::NoTextBox, false, 90, 0);
@@ -113,12 +113,15 @@ void A2StarterAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
         audioProcessor.dry = drySlider.getValue();
     else if (slider == &wetSlider)
         audioProcessor.wet = wetSlider.getValue();
-	else if (slider == &fbSlider)
-		audioProcessor.feedback = fbSlider.getValue();
-	else if (slider == &panSlider)
-		audioProcessor.panLeft = panSlider.getValue();
-	else if (slider == &timeSlider)
-		audioProcessor.timeIntervalSeconds = timeSlider.getValue();
+    else if (slider == &fbSlider)
+        audioProcessor.feedback = fbSlider.getValue();
+    else if (slider == &panSlider)
+        audioProcessor.panLeft = panSlider.getValue();
+    else if (slider == &timeSlider)
+    {
+        audioProcessor.clearDelayBuffer();
+        audioProcessor.timeIntervalSeconds = timeSlider.getValue();
+    }
 }
 
 void A2StarterAudioProcessorEditor::buttonClicked (juce::Button* button)
