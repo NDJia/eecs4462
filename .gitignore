@@ -1,8 +1,10 @@
 # Ignore pdfs
 *.pdf
 
-# Ignore VSCode workspace files
+# Ignore VSCode and Visual Studio workspace files
 *.code-workspace
+*/.vs/
+*/.vscode/
 
 # Ignore the build folders
 **/Builds
