@@ -20,10 +20,10 @@ A2StarterAudioProcessorEditor::A2StarterAudioProcessorEditor (A2StarterAudioProc
     // these define the parameters of our slider object
     // drySlider represents the global dry parameter.
     drySlider.setSliderStyle (juce::Slider::LinearBarVertical);
-    drySlider.setRange (0.0, 2.0, 0.05);
+    drySlider.setRange (0.0, 1.0, 0.05);
     drySlider.setTextBoxStyle (juce::Slider::NoTextBox, false, 90, 0);
     drySlider.setPopupDisplayEnabled (true, false, this);
-    drySlider.setTextValueSuffix (" Volume");
+    drySlider.setTextValueSuffix (" Dry");
     drySlider.setValue(1.0);
  
     // this function adds the slider to the editor
@@ -70,10 +70,36 @@ A2StarterAudioProcessorEditor::A2StarterAudioProcessorEditor (A2StarterAudioProc
     timeSlider.setTextBoxStyle (juce::Slider::NoTextBox, false, 90, 0);
     timeSlider.setPopupDisplayEnabled (true, false, this);
     timeSlider.setTextValueSuffix (" Interval");
-    timeSlider.setValue(1.5);
+    timeSlider.setValue(1.0);
     // add delay slider to editor
     addAndMakeVisible (&timeSlider);
     timeSlider.addListener (this);
+
+
+
+    // zeno mode toggle setup
+    zenoToggle.setClickingTogglesState(true);
+    zenoToggle.setButtonText("Zeno");
+    // zeno mode toggle initialize
+    addAndMakeVisible(&zenoToggle);
+    zenoToggle.addListener(this);
+
+
+
+    // ping-pong mode toggle setup
+    pingpongToggle.setButtonText("Ping-Pong Panning");
+    pingpongToggle.setClickingTogglesState(true);
+    // initialize ping-pong mode toggle button
+    addAndMakeVisible(&pingpongToggle);
+    pingpongToggle.addListener(this);
+
+
+
+    // set up reset button
+    resetButton.setButtonText("Reset");
+    // Initialize reset button
+    addAndMakeVisible(&resetButton);
+    resetButton.addListener(this);
 }
 
 A2StarterAudioProcessorEditor::~A2StarterAudioProcessorEditor()
@@ -100,11 +126,16 @@ void A2StarterAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     // sets the position and size of the slider with arguments (x, y, width, height)
-    drySlider.setBounds (40, 30, 20, getHeight() - 60);
-    wetSlider.setBounds (100, 30, 20, getHeight() - 60);
-    fbSlider.setBounds (160, 30, 20, getHeight() - 60);
-    panSlider.setBounds (220, 30, 20, getHeight() - 60);
-    timeSlider.setBounds (280, 30, 20, getHeight() - 60);
+    drySlider.setBounds (40, 30, 20, getHeight() - 100);
+    wetSlider.setBounds (100, 30, 20, getHeight() - 100);
+    fbSlider.setBounds (160, 30, 20, getHeight() - 100);
+    panSlider.setBounds (220, 30, 20, getHeight() - 100);
+    timeSlider.setBounds (280, 30, 20, getHeight() - 100);
+
+    zenoToggle.setBounds(40, getHeight() - 60, 200, 50);
+    pingpongToggle.setBounds(300, getHeight() - 60, 200, 50);
+    resetButton.setBounds(600, getHeight() - 60, 200, 50);
+
 }
 
 void A2StarterAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
@@ -118,14 +149,18 @@ void A2StarterAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
     else if (slider == &panSlider)
         audioProcessor.panLeft = panSlider.getValue();
     else if (slider == &timeSlider)
-    {
-        audioProcessor.clearDelayBuffer();
-        audioProcessor.timeIntervalSeconds = timeSlider.getValue();
-    }
+        audioProcessor.changeBufferTime(timeSlider.getValue());
+    
 }
 
 void A2StarterAudioProcessorEditor::buttonClicked (juce::Button* button)
 {
-
+    if (button == &pingpongToggle)
+    {
+        audioProcessor.pingpongEnabled = pingpongToggle.getToggleState();
+        audioProcessor.panLeft = 0.5;
+    }
+    else if (button == &resetButton)
+        audioProcessor.clearDelayBuffer();
 }
 

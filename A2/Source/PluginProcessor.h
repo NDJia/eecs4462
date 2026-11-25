@@ -63,6 +63,7 @@ public:
 
     //====================
     void clearDelayBuffer();
+    void changeBufferTime(float newTime);
 
 private:
     float rate;

@@ -99,7 +99,7 @@ void A2StarterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 
     timeIntervalSeconds = 1.0;
     wet = 1.0;
-    feedback = 0.3;
+    feedback = 0.5;
     
     // the delay buffer is at most 6 seconds long
     // it should be double the size for zeno, plus a little extra for insurance
@@ -107,15 +107,15 @@ void A2StarterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     delayBuffer.setSize(2, ((int) rate * 6) + 512);
     delayBuffer.clear();
 
-    // set delayBufferLength to three seconds
+    // set delayBufferLength to the starting time
     delayBufferLength = (int) (timeIntervalSeconds * rate);
     delayBlockStart = 0;
 
-    panLeft = 0.5f;
+    panLeft = 0.5;
 
     time = 0;
     pingpongEnabled = false;
-    zenoEnabled = true;
+    zenoEnabled = false;
 
 }
 
@@ -243,13 +243,14 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
 
                 // Place additional repetitions in the buffer at decreasing intervals
-                float nextTimeInterval = timeIntervalSeconds;
-                for (int j = 0; j < 9; j++)
+                for (int j = 0; j < 4; j++)
                 {
-                    nextTimeInterval += nextTimeInterval * (0.5*j);
+                    float nextTimeInterval = timeIntervalSeconds + timeIntervalSeconds*(0.5*j);
                     int nextIndex = ((int) ceil(rate*nextTimeInterval) + i) % (delayBufferLength*2);
-                    delayData[nextIndex] = input*dry + delayData[i]*0.5;
+
+                    delayData[nextIndex] = input*dry + delayData[futureIndex]*0.75;
                     futureIndex = nextIndex;
+
                 }
                
             }
@@ -269,9 +270,20 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
 }
 
+
 void A2StarterAudioProcessor::clearDelayBuffer()
 {
     delayBuffer.clear();
+    //delayBlockStart = 0;
+}
+
+void A2StarterAudioProcessor::changeBufferTime(float newTime)
+{
+    timeIntervalSeconds = newTime;
+    delayBufferLength = (int) (timeIntervalSeconds * rate);
+    delayBuffer.clear();
+    delayBlockStart = 0;
+
 }
 
 //==============================================================================

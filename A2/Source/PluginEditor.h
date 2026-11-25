@@ -29,7 +29,7 @@ public:
 
 private:
     void sliderValueChanged (juce::Slider* slider) override;
-      void buttonClicked (juce::Button* button) override;
+    void buttonClicked (juce::Button* button) override;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     A2StarterAudioProcessor& audioProcessor;
@@ -38,10 +38,14 @@ private:
 
     juce::Slider wetSlider;
     juce::Slider panSlider, fbSlider;
-      juce::Slider timeSlider;
+    juce::Slider timeSlider;
 
-    const int width = 400;
-    const int height = 400;
+    juce::TextButton zenoToggle;
+    juce::TextButton pingpongToggle;
+    juce::TextButton resetButton;
+
+    const int width = 800;
+    const int height = 500;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A2StarterAudioProcessorEditor)
 };
