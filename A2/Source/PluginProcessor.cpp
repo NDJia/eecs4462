@@ -97,25 +97,26 @@ void A2StarterAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     rate = static_cast<float> (sampleRate);
     dry = 1.0;
 
-    timeIntervalSeconds = 1.0;
+    timeIntervalSeconds = 2.0;
     wet = 1.0;
     feedback = 0.5;
     
+
+    // set delayBufferLength to the starting time
+    delayBufferLength = (int) (6 * rate) + 512;
+    delayBlockStart = 0;
+
     // the delay buffer is at most 6 seconds long
     // it should be double the size for zeno, plus a little extra for insurance
 
-    delayBuffer.setSize(2, ((int) rate * 6) + 512);
+    delayBuffer.setSize(2, delayBufferLength);
     delayBuffer.clear();
-
-    // set delayBufferLength to the starting time
-    delayBufferLength = (int) (timeIntervalSeconds * rate);
-    delayBlockStart = 0;
 
     panLeft = 0.5;
 
     time = 0;
     pingpongEnabled = false;
-    zenoEnabled = false;
+    zenoEnabled = true;
 
 }
 
@@ -172,7 +173,7 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // interleaved by keeping the same state.
 
     int numSamples = buffer.getNumSamples();
-    //DBG(1);
+    //DBG("a");
 
     if (!zenoEnabled)
     {
@@ -200,9 +201,6 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                 // Store future delay buffer sample
                 delayData[futureIndex] = data[i] + delayData[i]*feedback;
 
-                // clear current delay buffer value
-                //delayData[i] = 0.0f;
-
                 // data[i] = output * pan;
                 data[i] = output * pan;
                 
@@ -210,7 +208,7 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                     
         }
         // update starting position in delayBuffer for next block
-        delayBlockStart = (delayBlockStart + numSamples) % delayBufferLength;
+        //delayBlockStart = (delayBlockStart + numSamples) % delayBufferLength;
     }
     else
     {
@@ -221,7 +219,7 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
             float* data = buffer.getWritePointer (channel,0);
 
             // Get a pointer to write in the delayBuffer
-            float* delayData = delayBuffer.getWritePointer(channel,delayBlockStart);
+            float* delayData = delayBuffer.getWritePointer(channel,0);
             
             for (int i = 0; i < numSamples; ++i)
             {
@@ -229,7 +227,7 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                 float input = data[i];
 
                 // get point in delay buffer in the "future" to write to
-                int futureIndex = ((int) ceil(rate*timeIntervalSeconds) + i) % (delayBufferLength*2);
+                //int futureIndex = ((int) ceil(rate*timeIntervalSeconds) + i) % (delayBufferLength);
 
                 // output is sum of input and curren
                 //float pan;
@@ -237,28 +235,46 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                 //else pan = (1 - panLeft);
                 
                 // Compute output value and modify buffer
-                data[i] = input*dry + delayData[i]*wet;
+                int delayBufferIndex = (delayBlockStart + i) % delayBufferLength;
+                //DBG("i: " << delayBufferIndex);
+
+                data[i] = input*dry + delayData[delayBufferIndex]*wet;
                 
                 //delayData[futureIndex] = input*dry + delayData[i]*zenoFeedback;
 
-
+                float nextTimeInterval = timeIntervalSeconds;
+                float timeAdded = timeIntervalSeconds;
                 // Place additional repetitions in the buffer at decreasing intervals
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 7; j++)
                 {
-                    float nextTimeInterval = timeIntervalSeconds + timeIntervalSeconds*(0.5*j);
-                    int nextIndex = ((int) ceil(rate*nextTimeInterval) + i) % (delayBufferLength*2);
+                    int zenoDelayIndex = (((int) ceil(rate*timeAdded)) + delayBufferIndex) % delayBufferLength;
+                    
+                    delayData[zenoDelayIndex] += input*dry * pow(zenoFeedback, j);
+                    //futureIndex = nextIndex;
 
-                    delayData[nextIndex] = input*dry + delayData[futureIndex]*0.75;
-                    futureIndex = nextIndex;
+                    nextTimeInterval = nextTimeInterval * 0.5;
+                    timeAdded += nextTimeInterval;
+
+                    //if (i == 0)
+                    //{
+                    //    DBG("timeAdded: " << timeAdded);
+                    //    DBG("buffer length: " << delayBufferLength);
+                    //    DBG("index: " << zenoDelayIndex);
+
+                    //}
 
                 }
+
+                //if (i == 0) DBG("=========");
                
             }
         }
 
+
         // update starting position in delayBuffer for next block
         // Note that the delayBufferLength is doubled in zeno mode.
-        delayBlockStart = (delayBlockStart + numSamples) % (delayBufferLength*2);
+        //delayBlockStart = (delayBlockStart + numSamples) % (delayBufferLength);
+        //DBG("block start: " << delayBlockStart);
     }
 
     // update panning value when pingpong is enabled
@@ -268,6 +284,10 @@ void A2StarterAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         panLeft = (sin(time) + 1.0f) / 2.0f;
     }
 
+
+
+    delayBlockStart = (delayBlockStart + numSamples) % (delayBufferLength);
+    //DBG("block start: " << delayBlockStart);
 }
 
 
@@ -280,7 +300,7 @@ void A2StarterAudioProcessor::clearDelayBuffer()
 void A2StarterAudioProcessor::changeBufferTime(float newTime)
 {
     timeIntervalSeconds = newTime;
-    delayBufferLength = (int) (timeIntervalSeconds * rate);
+    //delayBufferLength = (int) (timeIntervalSeconds * rate);
     delayBuffer.clear();
     delayBlockStart = 0;
 
