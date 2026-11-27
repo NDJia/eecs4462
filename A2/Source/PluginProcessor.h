@@ -63,6 +63,7 @@ public:
 
     //====================
     void clearDelayBuffer();
+    void changeBufferTime(float newTime);
 
 private:
     float rate;
@@ -74,6 +75,7 @@ private:
     int delayBlockStart;
 
     float time;
+    const float zenoFeedback = 0.4;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A2StarterAudioProcessor)

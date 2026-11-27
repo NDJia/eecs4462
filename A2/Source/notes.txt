@@ -40,7 +40,7 @@ for each sample in the block:
 
     Repeat 10 times:
         halve current repetition interval
-        future(n+1) = future + halved
+        future(n) = future + halved
         future(n+1) = future(n)*feedback
 
 ** create a buffer of six seconds; use half of it for non-zeno

@@ -50,7 +50,7 @@
           uiopen_Debug="0">
     <PLUGIN name="A2" format="VST3" category="Fx" manufacturer="EECS4462"
             version="1.0.0" file="/home/ndjia/.vst3/A2.vst3/Contents/x86_64-linux/A2.so"
-            uniqueId="f8a4d425" isInstrument="0" fileTime="1a1cc00a9f0" infoUpdateTime="1a1cc02728d"
+            uniqueId="f8a4d425" isInstrument="0" fileTime="1a1d1b86c98" infoUpdateTime="1a209a2f13e"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="acf7e984"/>
     <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
@@ -82,7 +82,7 @@
           uiLastX_Normal="135" uiLastY_Normal="162" uiopen_Normal="0">
     <PLUGIN name="APTLYPlayer" format="VST3" category="Fx" manufacturer="yourcompany"
             version="1.0.0" file="/home/ndjia/.vst3/APTLYPlayer.vst3/Contents/x86_64-linux/APTLYPlayer.so"
-            uniqueId="f6aca824" isInstrument="0" fileTime="1a1a864e150" infoUpdateTime="1a1cc02728e"
+            uniqueId="f6aca824" isInstrument="0" fileTime="1a1a864e150" infoUpdateTime="1a209a2f13f"
             numInputs="0" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="acf71979"/>
     <STATE>398.VMjLgTX....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9HSLz3hUMoFSmQTRt3hKt7zJlcUXxEDZisVRxH1a3vVX3fjTLQmKogjYTwVXogiQY8FMwjENHIUUTkEUKMCR38TNtHzSAU0QY8FNrE0a2YUVPcmUXQSUrI1TQcEV5UkQHw1ZFE1ZvjFR0YVLgMWUwrDcQwlVuUTLKQDNwfELvXUVzEkLhUGRUEUPAUUTREjTSsVTVo0Y3HTVmE0QiomK40jd2TjX3gSLYgWUwHVd3rlXqEjLggWTssjLEw1Xn4hPgUGNFI1azDSV3fjPLg1Mn8jKt3hKt3hKt3hKt3hRUACTEEzZh8VVWgkdUYTTmE0UX4BQP4hPqcjXm0jLh4BQP4xPt.0Qt3hKt3hKt3hKtQUUCUEQTg2ZrM1YQcUVDUjQicVP77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
